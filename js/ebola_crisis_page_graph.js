@@ -101,7 +101,7 @@ function generateLineChart(id,data){
             series[name].values.push({label: d.date, value: +d.cases[name]});
           });
         });        
-        console.log(seriesCaseArr);
+
     var caseColor = d3.scale.ordinal()
           .range(["#1A237E","#3949AB","#7986CB","#E8EAF6"]); 
 
