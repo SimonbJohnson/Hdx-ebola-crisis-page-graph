@@ -253,7 +253,7 @@ function generateLineChart(id,data){
         .attr("x",width+10)
         .attr("y", y(data[data.length-1].deaths['other']/2+data[data.length-1].deaths['Sierra Leone']
             +data[data.length-1].deaths['Liberia']+data[data.length-1].deaths['Guinea']
-        ))
+        )-5)
         .attr("dy", ".2em")
         .style("text-anchor", "start")
         .text("Other ("+data[data.length-1].deaths['other']+")")
