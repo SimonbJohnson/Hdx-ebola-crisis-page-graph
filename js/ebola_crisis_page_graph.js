@@ -202,6 +202,98 @@ function generateLineChart(id,data){
         .text("Deaths ("+data[data.length-1].deaths.total+")")
         .attr("class","linelabels");
 
+    svg.append("g")
+        .append("text")
+        .attr("x",width+10)
+        .attr("y", y(data[data.length-1].cases['other']/2+data[data.length-1].cases['Sierra Leone']
+            +data[data.length-1].cases['Liberia']+data[data.length-1].cases['Guinea']
+        ))
+        .attr("dy", ".2em")
+        .style("text-anchor", "start")
+        .text("Other ("+data[data.length-1].cases['other']+")")
+        .attr("class","areacaselabels")
+        .attr("opacity",0);
+
+    svg.append("g")
+        .append("text")
+        .attr("x",width+10)
+        .attr("y", y(data[data.length-1].cases['Sierra Leone']/2
+            +data[data.length-1].cases['Liberia']+data[data.length-1].cases['Guinea']
+        ))
+        .attr("dy", ".2em")
+        .style("text-anchor", "start")
+        .text("Sierra Leone ("+data[data.length-1].cases['Sierra Leone']+")")
+        .attr("class","areacaselabels")
+        .attr("opacity",0);
+
+    svg.append("g")
+        .append("text")
+        .attr("x",width+10)
+        .attr("y", y(data[data.length-1].cases['Liberia']/2+data[data.length-1].cases['Guinea']
+        ))
+        .attr("dy", ".2em")
+        .style("text-anchor", "start")
+        .text("Liberia ("+data[data.length-1].cases['Liberia']+")")
+        .attr("class","areacaselabels")
+        .attr("opacity",0);
+
+    svg.append("g")
+        .append("text")
+        .attr("x",width+10)
+        .attr("y", y(data[data.length-1].cases['Guinea']/2
+        ))
+        .attr("dy", ".2em")
+        .style("text-anchor", "start")
+        .text("Guinea ("+data[data.length-1].cases['Guinea']+")")
+        .attr("class","areacaselabels")
+        .attr("opacity",0);
+
+    svg.append("g")
+        .append("text")
+        .attr("x",width+10)
+        .attr("y", y(data[data.length-1].deaths['other']/2+data[data.length-1].deaths['Sierra Leone']
+            +data[data.length-1].deaths['Liberia']+data[data.length-1].deaths['Guinea']
+        ))
+        .attr("dy", ".2em")
+        .style("text-anchor", "start")
+        .text("Other ("+data[data.length-1].deaths['other']+")")
+        .attr("class","areadeathlabels")
+        .attr("opacity",0);
+
+    svg.append("g")
+        .append("text")
+        .attr("x",width+10)
+        .attr("y", y(data[data.length-1].deaths['Sierra Leone']/2
+            +data[data.length-1].deaths['Liberia']+data[data.length-1].deaths['Guinea']
+        ))
+        .attr("dy", ".2em")
+        .style("text-anchor", "start")
+        .text("Sierra Leone ("+data[data.length-1].deaths['Sierra Leone']+")")
+        .attr("class","areadeathlabels")
+        .attr("opacity",0);
+
+    svg.append("g")
+        .append("text")
+        .attr("x",width+10)
+        .attr("y", y(data[data.length-1].deaths['Liberia']/2+data[data.length-1].deaths['Guinea']
+        ))
+        .attr("dy", ".2em")
+        .style("text-anchor", "start")
+        .text("Liberia ("+data[data.length-1].deaths['Liberia']+")")
+        .attr("class","areadeathlabels")
+        .attr("opacity",0);
+
+    svg.append("g")
+        .append("text")
+        .attr("x",width+10)
+        .attr("y", y(data[data.length-1].deaths['Guinea']/2
+        ))
+        .attr("dy", ".2em")
+        .style("text-anchor", "start")
+        .text("Guinea ("+data[data.length-1].deaths['Guinea']+")")
+        .attr("class","areadeathlabels")
+        .attr("opacity",0);
+
     svg.append("path")
         .datum(data)
         .attr("class", "line")
@@ -212,7 +304,7 @@ function generateLineChart(id,data){
 
     svg.append("path")
         .datum(data)
-        .attr("class", "line")
+        .attr("class", "line deathline")
         .attr("d", deathLine)
         .attr("fill","none")
         .attr("stroke","red")
@@ -241,14 +333,6 @@ function generateLineChart(id,data){
             .style("fill", function (d) { return caseColor(d.name); })
             .style("stroke", function (d) { return caseColor(d.name); })
             .attr("opacity",0);
-        
-        selection.append("text")
-            .attr("x", width+10)
-            .attr("y", 10)
-            .attr("dy", ".2em")
-            .style("text-anchor", "start")
-            .text(function(d){;return d.name;})
-            .attr("opacity",1);
 
     svg.append("path")
         .datum(data)
@@ -258,10 +342,12 @@ function generateLineChart(id,data){
         .on("mouseover",function(){
             d3.selectAll(".deathPath").transition().duration(500).attr("opacity",0.5);
             d3.selectAll(".linelabels").transition().duration(500).attr("opacity",0);
+            d3.selectAll(".areadeathlabels").transition().duration(500).attr("opacity",1);
         })
         .on("mouseout",function(){
             d3.selectAll(".deathPath").transition().duration(500).attr("opacity",0);
             d3.selectAll(".linelabels").transition().duration(500).attr("opacity",1);
+            d3.selectAll(".areadeathlabels").transition().duration(500).attr("opacity",0);
         });        
 
     svg.append("path")
@@ -272,9 +358,13 @@ function generateLineChart(id,data){
         .on("mouseover",function(){
             d3.selectAll(".casePath").transition().duration(500).attr("opacity",0.5);
             d3.selectAll(".linelabels").transition().duration(500).attr("opacity",0);
+            d3.selectAll(".areacaselabels").transition().duration(500).attr("opacity",1);
+            d3.selectAll(".deathline").transition().duration(500).attr("opacity",0);
         })
         .on("mouseout",function(){
             d3.selectAll(".casePath").transition().duration(500).attr("opacity",0);
             d3.selectAll(".linelabels").transition().duration(500).attr("opacity",1);
-        })
+            d3.selectAll(".areacaselabels").transition().duration(500).attr("opacity",0);
+            d3.selectAll(".deathline").transition().duration(500).attr("opacity",1);
+        });
 }

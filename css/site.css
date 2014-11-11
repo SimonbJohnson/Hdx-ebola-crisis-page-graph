@@ -9,3 +9,7 @@
   stroke: #000;
   shape-rendering: crispEdges;
 }
+
+text {
+    font-size:12px;
+}
