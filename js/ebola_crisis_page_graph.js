@@ -16,21 +16,6 @@ $.ajax({
   }
 });
 
-$.ajax({
-  type: 'POST',
-  dataType: 'json',
-  url: 'https://data.hdx.rwlabs.org/api/3/action/datastore_search_sql',
-  data: data,
-  success: function(data) {
-      var processedData = processData(data.result.records);
-      processedData.push({cases:{'Guinea':8000,'Liberia':15000,'Sierra Leone':12000,'other':500,'total':35500},
-          date:new Date('2015-02-29T00:00:00'),
-          deaths:{'Guinea':4000,'Liberia':7500,'Sierra Leone':6000,'other':250,'total':17250}
-      });
-      generateLineChart('#ebola_graph',processedData);
-  }
-});
-
 function processData(dataIn){
     var data = [];
     var firstLine = true;
