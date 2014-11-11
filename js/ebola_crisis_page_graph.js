@@ -142,6 +142,12 @@ function generateLineChart(id,data){
         .scale(y)
         .orient("left");
 
+    var gridAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        .tickSize(-width, 0, 0)
+        .tickFormat("");
+
     var deathLine = d3.svg.line()
         .x(function(d) {
             return x(d.date);
@@ -183,6 +189,9 @@ function generateLineChart(id,data){
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+    svg.append("g")
+        .attr("class", "grid")
+        .call(gridAxis);
 
     svg.append("g")
         .attr("class", "xaxis axis")
@@ -196,8 +205,7 @@ function generateLineChart(id,data){
         .attr("transform", "rotate(-90)")
         .attr("y", 6)
         .attr("dy", ".71em")
-        .style("text-anchor", "end")
-        .text("Persons");
+        .style("text-anchor", "end");
 
     svg.append("g")
         .append("text")
