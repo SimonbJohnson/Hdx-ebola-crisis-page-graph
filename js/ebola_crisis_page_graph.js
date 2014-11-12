@@ -16,21 +16,6 @@ $.ajax({
   }
 });
 
-$.ajax({
-  type: 'POST',
-  dataType: 'json',
-  url: 'https://data.hdx.rwlabs.org/api/3/action/datastore_search_sql',
-  data: data,
-  success: function(data) {
-      var processedData = processData(data.result.records);
-      processedData.push({cases:{'Guinea':8000,'Liberia':15000,'Sierra Leone':12000,'other':500,'total':35500},
-          date:new Date('2015-02-29T00:00:00'),
-          deaths:{'Guinea':4000,'Liberia':7500,'Sierra Leone':6000,'other':250,'total':17250}
-      });
-      generateLineChart('#ebola_graph',processedData);
-  }
-});
-
 function processData(dataIn){
     var data = [];
     var firstLine = true;
@@ -104,7 +89,8 @@ function generateLineChart(id,data){
         });        
         
     var deathColor = d3.scale.ordinal()
-          .range(["#B71C1C","#E53935","#EF9A9A","#FFEBEE"]);        
+          //.range(["#B71C1C","#E53935","#EF9A9A","#FFEBEE"]);
+            .range(["#f2645a","#F58A83","#F8B1AC","#FBD8D5"]);
   
     var seriesCaseArr = [], series = {};
         varNames.forEach(function (name) {
@@ -116,11 +102,12 @@ function generateLineChart(id,data){
             series[name].values.push({label: d.date, value: +d.cases[name]});
           });
         });        
-        console.log(seriesCaseArr);
-    var caseColor = d3.scale.ordinal()
-          .range(["#1A237E","#3949AB","#7986CB","#E8EAF6"]); 
 
-    var margin = {top: 20, right: 120, bottom: 25, left: 50},
+    var caseColor = d3.scale.ordinal()
+          //.range(["#1A237E","#3949AB","#7986CB","#E8EAF6"])
+          .range(["#007ce0","#4CA3E9","#7FBDEF","#CCE4F8"]);
+
+    var margin = {top: 20, right: 150, bottom: 25, left: 50},
         width = $(id).width() - margin.left - margin.right,
         height = $(id).height() - margin.top - margin.bottom;
 
@@ -322,16 +309,16 @@ function generateLineChart(id,data){
         .attr("class", "line")
         .attr("d", caseLine)
         .attr("fill","none")
-        .attr("stroke","steelblue")
-        .attr("stroke-width","1px");
+        .attr("stroke","#007ce0")
+        .attr("stroke-width","2px");
 
     svg.append("path")
         .datum(data)
         .attr("class", "line deathline")
         .attr("d", deathLine)
         .attr("fill","none")
-        .attr("stroke","red")
-        .attr("stroke-width","1px");
+        .attr("stroke","#f2645a")
+        .attr("stroke-width","2px");
 
     var selection = svg.selectAll(".seriesdeath")
           .data(seriesDeathArr)
